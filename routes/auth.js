@@ -5,7 +5,8 @@ const router = express.Router();
 const users = [];
 
 // GET login/register
-router.get('/login', (req, res) => {
+router.get(['/login', '/'], (req, res) => {
+  // Mostramos login.ejs que tiene registro y login juntos
   res.render('login', {
     error: req.session?.error_message || null,
     success: req.session?.success_message || null
