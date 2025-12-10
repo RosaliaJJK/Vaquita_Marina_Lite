@@ -23,6 +23,11 @@ app.set("view engine", "ejs");
 
 app.use("/auth", authRoutes);
 
+// **Ruta raíz redirige al login**
+app.get("/", (req, res) => {
+  res.redirect("/auth/login");
+});
+
 // Páginas principales
 app.get("/habitat", (req,res)=>{
   res.render("habitat");
