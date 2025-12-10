@@ -23,6 +23,7 @@ app.set("view engine", "ejs");
 
 app.use("/auth", authRoutes);
 
+// Páginas principales
 app.get("/habitat", (req,res)=>{
   res.render("habitat");
 });

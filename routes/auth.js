@@ -48,7 +48,7 @@ router.post('/login', (req, res) => {
   }
 
   req.session.user = user;
-  return res.redirect('/habitat'); // ahora si puedes entrar
+  return res.redirect('/habitat'); // redirige a habitat
 });
 
 // Logout
