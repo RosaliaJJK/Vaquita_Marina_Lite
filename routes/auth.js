@@ -1,3 +1,4 @@
+// routes/auth.js
 const express = require('express');
 const router = express.Router();
 
@@ -5,8 +6,7 @@ const router = express.Router();
 const users = [];
 
 // GET login/register
-router.get(['/login', '/'], (req, res) => {
-  // Mostramos login.ejs que tiene registro y login juntos
+router.get('/login', (req, res) => {
   res.render('login', {
     error: req.session?.error_message || null,
     success: req.session?.success_message || null
@@ -18,6 +18,7 @@ router.get(['/login', '/'], (req, res) => {
 // POST register
 router.post('/register', (req, res) => {
   const { usuario, contrasena } = req.body;
+
   if (!usuario || !contrasena) {
     req.session.error_message = 'Faltan datos';
     return res.redirect('/auth/login');
@@ -54,7 +55,14 @@ router.post('/login', (req, res) => {
 
 // Logout
 router.get('/logout', (req, res) => {
-  req.session.destroy(() => res.redirect('/auth/login'));
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Error cerrando sesión:', err);
+      return res.send('Error cerrando sesión');
+    }
+    res.clearCookie('connect.sid'); // limpia la cookie
+    res.redirect('/auth/login');    // redirige al login
+  });
 });
 
 module.exports = router;
